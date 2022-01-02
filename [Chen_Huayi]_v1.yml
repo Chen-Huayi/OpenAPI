@@ -1,0 +1,150 @@
+openapi: 3.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/ChenHuayi131/COMP3040_A3/1.0.0
+  - url: https://lakeofmanitoba.com
+info:
+  version: 1.0.0
+  title: Manitoba Lake Inquiry
+  description: The Lake Manitoba API allows researchers or developers to find statistics about any lake within the province of Manitoba. This API can provide a series of data, including accurately reported temperatures, depths, Ph, and water levels since the year 2000. All statistics are recorded daily from all lakes in Manitoba, through sampling and measurement reports.
+  contact:
+    email: chenh4@myumanitoba.ca
+tags:
+  - name: Lake
+    description: Statistic data about the lake in Manitoba
+paths:
+  /lake:
+    get:
+      tags:
+        - Lake
+      summary: searches lake by location
+      operationId: searchByLakeLocation
+      description: By passing in the appropriate coordinate point of lake, you can search for available statistic data about this lake
+      parameters:
+        - in: query
+          name: lat
+          required: true
+          description: The latitude coordinate of the lake.
+          schema:
+            type: number
+            format: float
+            minimum: -90.00
+            maximum: 90.00
+        - in: query
+          name: lon
+          required: true
+          description: The longitude coordinate of the lake.
+          schema:
+            type: number
+            format: float
+            minimum: -180.00
+            maximum: 180.00
+        - in: query
+          name: date
+          required: false
+          description: Date of measurement of lake body (Formatted as **MM-DD-YYYY**)
+          schema:
+            type: string
+            format: date
+            default: 11-19-2000
+        - in: query
+          name: system
+          required: false
+          description: The results will be show either imperial system or metric system. **0 for imperial system, 1 for metric system**
+          schema:
+            type: integer
+            format: int32
+            default: 1
+      responses:
+        '200':
+          description: Successful response, search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SuccessfulResponse'
+        '400':
+          description: Invalid lake coordinate supplied
+        '404':
+          description: Lake not found
+  /lake/{lakeName}:
+    get:
+      tags:
+        - Lake
+      summary: searches lake by name
+      operationId: searchByLakeName
+      description: By passing in the appropriate name of lake, you can search for available statistic data about this lake
+      parameters:
+      - name: lakeName
+        in: path
+        required: true
+        description: The full name of lake
+        schema:
+          type: string
+      - in: query
+        name: date
+        required: false
+        description: Date of measurement of lake body (Formatted as **MM-DD-YYYY**)
+        schema:
+          type: string
+          format: date
+          default: 11-19-2000
+      - in: query
+        name: system
+        required: false
+        description: The results will be show either imperial system or metric system. **0 for imperial system, 1 for metric system**
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      responses:
+        '200':
+          description: Successful response, search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/SuccessfulResponse'
+        '400':
+          description: Invalid lake name supplied
+        '404':
+          description: Lake not found
+components:
+  schemas:
+    SuccessfulResponse:
+      type: object
+      properties:
+        results:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 'CA6505_1'
+            name:
+              type: string
+              example: 'Lake Manitoba'
+            lat:
+              type: number
+              example: -83.01
+            long:
+              type: number
+              example: 111.09
+            water level:
+              type: number
+              example: 10.01
+            depth:
+              type: integer
+              example: 13
+            temperature:
+              type: integer
+              example: 15
+            altitude:
+              type: integer
+              example: 231
+            pH value:
+              type: number
+              example: 7.48
+        msg:
+          type: string
+          example: 'The query is successful!'
