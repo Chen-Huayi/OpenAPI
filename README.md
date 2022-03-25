@@ -1,6 +1,6 @@
 # Manitoba Lake Inquiry
 ## Description  
-The Lake Manitoba API allows researchers or developers to find statistics about any lake within the province of Manitoba. This API can provide a series of data, including accurately reported temperatures, depths, Ph, and water levels since the year 2000. All statistics are recorded daily from all lakes in Manitoba, through sampling and measurement reports. [Detailed implementation video](https://1drv.ms/v/s!AnJ1tw_xhoVEjyq7ffJUugyMdCkY?e=kcJyrg)   
+The Lake Manitoba API allows researchers or developers to find statistics about any lake within the province of Manitoba. This API can provide a series of data, including accurately reported temperatures, depths, Ph, and water levels since the year 2000. All statistics are recorded daily from all lakes in Manitoba, through sampling and measurement reports.    
 
 ## Endpoints and Parameters
 
